@@ -1,18 +1,27 @@
 import express from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
-
-import gastosRoutes from './routes/gastosRoutes.js';
-
-dotenv.config();
+import { supabase } from './config/supabaseClient.js';
 
 const app = express();
 
-app.use(cors());
-app.use(express.json());
+app.get('/', async (req, res) => {
 
-app.use('/gastos', gastosRoutes);
+  const { data, error } = await supabase
+    .from('gastos')
+    .select('*');
+
+  if (error) {
+    return res.status(500).json(error);
+  }
+
+  res.json(data);
+});
 
 app.listen(3000, () => {
-  console.log('Servidor rodando na porta 3000');
+  console.log('Servidor rodando');
+});
+
+app.get('/test', (req, res) => {
+  res.json({
+    mensagem: 'API funcionando'
+  });
 });
