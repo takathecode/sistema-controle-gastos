@@ -1,16 +1,7 @@
-const API_URL = 'http://SEU_IP:3000';
+import axios from "axios";
 
-export const getGastos = async () => {
-  const res = await fetch(`${API_URL}/gastos`);
-  return res.json();
-};
+const api = axios.create({
+  baseURL: "http://10.77.241.88:3000",
+});
 
-export const addGasto = async (gasto) => {
-  await fetch(`${API_URL}/gastos`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(gasto)
-  });
-};
+export default api;
